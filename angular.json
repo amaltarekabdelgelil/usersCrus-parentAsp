@@ -28,9 +28,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js", 
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -123,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "usersCrud-parentAps"
+    }
+  },
+  "defaultProject": "usersCrud-parentAps",
+  "cli": {
+    "analytics": "be97d102-79fb-4a4e-b5ae-9ed3f58d3517"
+  }
 }

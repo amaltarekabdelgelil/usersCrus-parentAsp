@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+$primary-color:#8E44AD;
+$secondary-color:#34495E;
+$darkGray-color: #7F8C8D;
+$lightGray-color:#D6DBE4;
+$bgBody-color: #f5f5f5;
+
+body{
+    background-color: $bgBody-color !important;
+    color: $darkGray-color !important;
+}
+.bg-custom{
+    background-color: $lightGray-color !important;
+    color: $secondary-color !important;
+}
+
+a{
+    color: $primary-color;
+    cursor: pointer;
+}
+
+.form-control:focus {
+    border-color: #a228c8;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(128 6 153 / 25%);
+}
+
+.primartBtn{
+    background: $primary-color;
+    color: #fff !important;
+    border-radius: 20px;
+    height: 40px;
+    padding: 7px 25px !important;
+    text-transform: uppercase;
+}
