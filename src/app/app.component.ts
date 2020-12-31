@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { UseraccountService } from './services/account.service';
+import { User } from './models/user';
+import { HeaderComponent} from './common/header/header.component';
 
 
 @Component({
@@ -9,9 +12,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  user: User;
   
-  
-  constructor() {
+  constructor(private accountService: UseraccountService) {
+    this.accountService.user.subscribe(x => this.user = x);
   }
 
   

@@ -1,0 +1,36 @@
+
+    <!-- Login content -->
+    <div class="login-body row shadow bg-white">
+        <div class="col-md-6 col-sm-12 col-xs-12 login-img">
+   
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12 pt-5 p-4 my-5">
+            
+            <!-- <div class="alert alert-danger" *ngIf="iserror">{{iserror}}</div> -->
+
+            <h2>Welcome back!</h2>
+            <p class="mt-3 mb-4">Please login to access your <a routerLink="">Spaces</a> Dashboard</p>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" (keydown)="handleKeyUp($event)">
+                <div class="form-group required">
+                        <label>Email</label>
+                        <input type="text" placeholder="Email..." formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="alert alert-danger">
+                            <div *ngIf="f.email.errors.required">Email is Required</div>
+                        </div>
+                </div>
+                <div class="form-group required">
+                        <label>Password</label>
+                        <input type="password" placeholder="********" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="alert alert-danger">
+                            <div *ngIf="f.password.errors.required">Password is Required</div>
+                        </div>
+                </div>
+                <div class="form-group required row mt-4">
+                    <div class="col-sm-9 forgetPassDiv"><a class="forgetPass" routerLink="">forget Password?</a></div>
+                    <div class="col-sm-3">
+                        <input type="submit" (click)="onSubmit()" value="LOGIN" class="form-control loginBtn">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

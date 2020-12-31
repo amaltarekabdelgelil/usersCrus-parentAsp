@@ -1,7 +1,8 @@
 <div class="container-fluid">
+  <app-header></app-header>
 
   <!-- main app container -->
-  <div class="app-container" >
+  <div class="app-container" [ngClass]="{ 'bg-custom': user }">
     <router-outlet></router-outlet>
   </div>
   
