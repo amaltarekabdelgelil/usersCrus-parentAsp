@@ -3,7 +3,7 @@
 .navbar{
     height: 70px;
 
-    .navbar-nav > a{
+    .navbar-nav > li > a{
         color: $secondary-color;
         font-size: 18px;
         margin: 0 .5rem;

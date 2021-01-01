@@ -1,0 +1,44 @@
+@import "../../../styles.scss";
+
+.avatar {
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 55px;
+    height: 55px;
+}
+.primary-color{
+    color: $primary-color
+}
+.userBtn{
+    border: 2px solid $primary-color !important;
+    color: $primary-color !important;
+    padding: .3rem .5rem !important;
+    margin: 0 .5rem;
+}
+.table thead th{
+    border: none !important;
+    color: $darkGray-color !important;
+    font-weight: 500 !important;
+}
+.table td {
+    padding: 1.2rem .75rem !important;
+}
+
+
+.example-container {
+    width: 500px;
+    height: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 20px;
+}

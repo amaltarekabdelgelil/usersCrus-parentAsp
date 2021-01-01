@@ -1,8 +1,8 @@
 <div class="container-fluid">
   <app-header></app-header>
-
+  <app-breadcrumb *ngIf="user"></app-breadcrumb>
   <!-- main app container -->
-  <div class="app-container" [ngClass]="{ 'bg-custom': user }">
+  <div class="app-container">
     <router-outlet></router-outlet>
   </div>
   

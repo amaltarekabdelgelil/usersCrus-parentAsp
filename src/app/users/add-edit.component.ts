@@ -1,48 +1,64 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatSnackBar,MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 import { UseraccountService } from '../services/account.service';
 
 
 @Component({ templateUrl: 'add-edit.component.html' })
+
 export class AddEditComponent implements OnInit {
     form: FormGroup;
     id: string;
     isAddMode: boolean;
     loading = false;
     submitted = false;
+    avatar: any;
+    horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+    verticalPosition: MatSnackBarVerticalPosition = 'top';
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private accountService: UseraccountService,
+        public dialogRef: MatDialogRef<AddEditComponent>,
+        @Inject(MAT_DIALOG_DATA) public data,
+        private _snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {
-        this.id = this.route.snapshot.params['id'];
-        this.isAddMode = !this.id;
-        
-        // password not required in edit mode
-        const passwordValidators = [Validators.minLength(6)];
-        if (this.isAddMode) {
-            passwordValidators.push(Validators.required);
+        // this.id = this.route.snapshot.params['id'];
+        if(this.data){
+            this.id = this.data['id'];
+            this.isAddMode = false;
         }
-
+        else{
+            this.isAddMode = true;
+        }
+        console.log(this.isAddMode)
+        
+   
         this.form = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            username: ['', Validators.required],
-            password: ['', passwordValidators]
+            name: ['', Validators.required],
+            job: ['', Validators.required],
         });
 
-        if (!this.isAddMode) {
-            this.accountService.getById(this.id)
-                .pipe(first())
-                .subscribe(x => this.form.patchValue(x));
+        if (!this.isAddMode && this.data) {
+            this.form.patchValue({name:this.data['data']['first_name'] })
+            this.avatar = this.data['data'].avatar;
+
+            // this.accountService.getById(this.id)
+            //     .pipe(first())
+            //     .subscribe(x => this.form.patchValue(x['data']));
         }
+    }
+
+    onNoClick(): void {
+        this.dialogRef.close();
     }
 
     // convenience getter for easy access to form fields
@@ -66,15 +82,25 @@ export class AddEditComponent implements OnInit {
     }
 
     private createUser() {
-        this.accountService.register(this.form.value)
+        this.accountService.create(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    // this.alertService.success('User added successfully', { keepAfterRouteChange: true });
-                    this.router.navigate(['../'], { relativeTo: this.route });
+                    this._snackBar.open( 'Your User Createsd Succesfully', 'Ok', {
+                        duration: 2000,
+                        horizontalPosition: this.horizontalPosition,
+                        verticalPosition: this.verticalPosition,
+                        panelClass: "success-dialog"
+                    });
+                    this.dialogRef.close();
                 },
                 error: error => {
-                    // this.alertService.error(error);
+                    this._snackBar.open( 'Something Wrong', 'Ok', {
+                        duration: 2000,
+                        horizontalPosition: this.horizontalPosition,
+                        verticalPosition: this.verticalPosition,
+                        panelClass: "danger-dialog"
+                    });
                     this.loading = false;
                 }
             });
@@ -85,11 +111,21 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    // this.alertService.success('Update successful', { keepAfterRouteChange: true });
-                    this.router.navigate(['../../'], { relativeTo: this.route });
+                    this._snackBar.open( 'Your User Updated Succesfully', 'Ok', {
+                        duration: 2000,
+                        horizontalPosition: this.horizontalPosition,
+                        verticalPosition: this.verticalPosition,
+                        panelClass: "success-dialog"
+                    });
+                    this.dialogRef.close();
                 },
                 error: error => {
-                    // this.alertService.error(error);
+                    this._snackBar.open( 'Something Wrong', 'Ok', {
+                        duration: 2000,
+                        horizontalPosition: this.horizontalPosition,
+                        verticalPosition: this.verticalPosition,
+                        panelClass: "danger-dialog"
+                    });
                     this.loading = false;
                 }
             });
