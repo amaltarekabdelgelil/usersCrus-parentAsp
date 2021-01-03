@@ -50,10 +50,6 @@ export class AddEditComponent implements OnInit {
         if (!this.isAddMode && this.data) {
             this.form.patchValue({name:this.data['data']['first_name'] })
             this.avatar = this.data['data'].avatar;
-
-            // this.accountService.getById(this.id)
-            //     .pipe(first())
-            //     .subscribe(x => this.form.patchValue(x['data']));
         }
     }
 

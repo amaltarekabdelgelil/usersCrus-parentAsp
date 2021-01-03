@@ -1,58 +1,63 @@
 <div class="d-flex bg-custom p-3">
     <h1 class="my-2">Users List</h1>
-    <a (click)="openAddUser()" class="btn btn-sm primaryBtn mb-2  ml-auto mt-2 mt-lg-0"><i class="fas fa-plus"></i> New User</a>    
+    <a (click)="openAddUser()" class="btn btn-sm primaryBtn mb-2 addNew ml-auto mt-2 mt-lg-0"><i class="fas fa-plus"></i> New User</a>    
 </div>
-<div class="card">
+<div class="card usersTable">
     <div class="card-body">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th style="width: 30%">User</th>
-                    <th style="width: 10%"> Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of users" class="py-4">
-                    <td>
-                        <a routerLink="">
-                            <img src="{{user.avatar}}" class="avatar" alt="Avatar"> {{user.first_name }} {{user.last_name}} 
-                        </a>
-                    </td>
-                    <td>
-                        <a (click)="openEditUser(user.id,user)" class="btn btn-sm userBtn mr-1 mt-2">
-                            <i class="fas fa-pen"></i>
-                        </a>
-                        <button (click)="confirmDialog(user)" class="btn btn-sm userBtn btn-delete-user mt-2" [disabled]="user.isDeleting">
-                            <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
-                            <span *ngIf="!user.isDeleting"><i class="fas fa-trash"></i></span>
-                        </button>
-                        <button class="btn btn-link primary-color ml-5 mt-2" (click)="sidenav.toggle()"><i class="fas fa-chevron-right"></i></button>
-                    </td>
-                </tr>
-                <tr *ngIf="!users">
-                    <td colspan="4" class="text-center">
-                        <span class="spinner-border spinner-border-lg align-center"></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <mat-drawer-container autosize>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 30%">User</th>
+                        <th style="width: 10%"> Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users; let i = index" (click)="onSelect(user)" [class.is-selected]="user==isSelectedUser && selected" class="py-4">
+                        <td>
+                            <a routerLink="" [ngClass]=" selected ? 'text-white' : 'primary-color' ">
+                                <img src="{{user.avatar}}" class="avatar" alt="Avatar"> {{user.first_name }} {{user.last_name}} 
+                            </a>
+                        </td>
+                        <td>
+                            <a (click)="openEditUser(user.id,user)" class="btn btn-sm userBtn mr-1 mt-2">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <button (click)="confirmDialog(user)" class="btn btn-sm userBtn btn-delete-user mt-2" [disabled]="user.isDeleting">
+                                <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
+                                <span *ngIf="!user.isDeleting"><i class="fas fa-trash"></i></span>
+                            </button>
+                            <button class="btn btn-link primary-color ml-5 mt-2" [ngClass]=" selected ? 'text-white' : 'primary-color' " (click)="drawer.toggle();openView(user)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!users">
+                        <td colspan="4" class="text-center">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <mat-drawer #drawer class="example-sidenav text-center" mode="side" position="end">
+                <div class="col d-flex justify-content-end mb-5">
+                    <span (click)="drawer.toggle()"><i class="fas fa-times primary-color"></i></span>
+                </div>
+                <div class="col">
+                    <img src="{{selectedUser.avatar}}" class="imgUser">
+                </div>
+                <h2 class="primary-color my-5">{{selectedUser.first_name }} {{selectedUser.last_name}}</h2>
+                <div class="col">
+                    <button class="primaryBtn mr-2 px-5" color="primary" (click)="openEditUser(selectedUser.id,selectedUser)">
+                        <i class="fas fa-pen"></i> Edit
+                    </button>
+                    <button class="secondaryBtn px-5" (click)="confirmDialog(selectedUser)">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </mat-drawer>
+        </mat-drawer-container>
     </div>
 </div>
 
 
-<!-- <mat-drawer-container class="example-container" autosize>
-    <mat-drawer #sidenav class="example-sidenav" mode="side">
-      <p>Auto-resizing sidenav</p>
-      <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-      <button (click)="showFiller = !showFiller" mat-raised-button>
-        Toggle extra text
-      </button>
-    </mat-drawer>
-</mat-drawer-container> -->
-
-<!-- <mat-sidenav-container class="container">
-    <mat-sidenav #sidenav class="sidebar" mode="over" opened="true">
-        <p>Auto-resizing sidenav</p>
-
-    </mat-sidenav>      
- </mat-sidenav-container> -->
